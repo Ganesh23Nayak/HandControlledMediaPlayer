@@ -1,0 +1,6 @@
+# Ignore directories
+__pycache__
+.idea/
+
+# Ignore .npy files
+*.npy

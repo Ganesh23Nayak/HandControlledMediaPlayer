@@ -4,9 +4,12 @@ import tkinter.font as font
 
 window=tk.Tk()
 window.title("Welcome")
-window.geometry("450x140")
+window.geometry("400x400")
 
 frame1 = tk.Frame(window)
+
+label= tk.Label(window, text="WELCOME",fg="black")
+label.pack()
 
 
 btn_font = font.Font(size=15)

@@ -2,14 +2,14 @@ import mediapipe as mp
 import numpy as np
 import cv2
 
-def datacollection():
+def datacollection(value):
     holistic=mp.solutions.holistic
     hands=mp.solutions.hands
     holis=holistic.Holistic()
     drawing=mp.solutions.drawing_utils
 
 
-    name = input("Enter the Input Data")
+    name = value
 
     #video input
     cap=cv2.VideoCapture(0)
@@ -49,9 +49,6 @@ def datacollection():
         x1.append(lst)
         data_size+=1
         
-       
-
-
 
         
         drawing.draw_landmarks(frame,res.right_hand_landmarks,hands.HAND_CONNECTIONS)  #used to mark the points on the frame

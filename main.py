@@ -80,21 +80,6 @@ class App(customtkinter.CTk):
             self.start_button = customtkinter.CTkButton(self.main_frame, text="Back to Start", command=self.start_page)
             self.start_button.grid(row=1, column=0, padx=20, pady=10)
 
-        elif App.n == 2:
-            self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
-            self.main_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
-            self.main_frame.grid_rowconfigure(4, weight=1)
-            self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Train Data",
-                                                     font=customtkinter.CTkFont(size=20, weight="bold"))
-            self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
-            # Add button to move to start page from other pages
-            self.start_button = customtkinter.CTkButton(self.main_frame, text="Back to Start", command=self.start_page)
-            self.start_button.grid(row=1, column=0, padx=20, pady=10)
-        elif App.n == 3:
-            self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=10)
-            self.main_frame.grid(row=0, column=1, rowspan=10, sticky="nsew")
-            self.main_frame.grid_rowconfigure(10, weight=1)
-
             self.radiobutton_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
             self.radiobutton_frame.grid(row=0, column=1, rowspan=10, padx=20, pady=0,sticky="nsew")
             # self.radio_var = tkinter.IntVar(value=0)
@@ -122,7 +107,26 @@ class App(customtkinter.CTk):
             self.save_button = customtkinter.CTkButton(self.radiobutton_frame, text="Collect and Save", command=self.save)
             self.save_button.grid(row=6, column=0, padx=10, pady=25)
 
-            
+        elif App.n == 2:
+            self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
+            self.main_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
+            self.main_frame.grid_rowconfigure(4, weight=1)
+            self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Train Data",
+                                                     font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+            # Add button to move to start page from other pages
+            self.start_button = customtkinter.CTkButton(self.main_frame, text="Back to Start", command=self.start_page)
+            self.start_button.grid(row=1, column=0, padx=20, pady=10)
+        elif App.n == 3:
+            self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
+            self.main_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
+            self.main_frame.grid_rowconfigure(4, weight=1)
+            self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Test",
+                                                     font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+            # Add button to move to start page from other pages
+            self.start_button = customtkinter.CTkButton(self.main_frame, text="Back to Start", command=self.start_page)
+            self.start_button.grid(row=1, column=0, padx=20, pady=10)
 
     
     def start_page(self):

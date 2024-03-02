@@ -1,29 +1,128 @@
-import tkinter as tk
-from dataCollection import datacollection
-import tkinter.font as font
+import tkinter
+import customtkinter
 
-window=tk.Tk()
-window.title("Welcome")
-window.geometry("400x400")
-
-frame1 = tk.Frame(window)
-
-label= tk.Label(window, text="WELCOME",fg="black")
-label.pack()
+customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
+customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
 
 
-btn_font = font.Font(size=15)
-btn1 = tk.Button(frame1,fg="red", text="add data",command=datacollection, height=5, width=10)
-btn1['font'] = btn_font
-btn1.grid(row=0, column=0, padx=(5,5), pady=(10,10))
+class App(customtkinter.CTk):
+    n = 0
 
-btn2 = tk.Button(frame1,fg="orange", text="train",command=" ", height=5, width=10)
-btn2['font'] = btn_font
-btn2.grid(row=0, column=1, padx=(5,5), pady=(10,10))
+    def __init__(self):
+        super().__init__()
+        self.title("Media Controller Using Hand Gestures")
+        self.geometry(f"{1100}x{580}")
 
-btn3 = tk.Button(frame1,fg="green", text="run",command=" ", height=5, width=10)
-btn3['font'] = btn_font
-btn3.grid(row=0, column=2, padx=(5,5), pady=(10,10))
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure((2, 3), weight=0)
+        self.grid_rowconfigure((0, 1, 2), weight=1)
 
-frame1.pack()
-window.mainloop()
+        self.sidebar_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
+        self.sidebar_frame.grid(row=0, column=0, rowspan=4, sticky="nsew")
+        self.sidebar_frame.grid_rowconfigure(4, weight=1)
+
+        self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, text="Customize",
+                                                 font=customtkinter.CTkFont(size=20, weight="bold"))
+        self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+
+        self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="TrainData", command=self.Traindata)
+        self.sidebar_button_1.grid(row=1, column=0, padx=20, pady=10)
+
+        self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, text="Datacollection",
+                                                        command=self.Collectdata)
+        self.sidebar_button_2.grid(row=2, column=0, padx=20, pady=10)
+
+        self.sidebar_button_3 = customtkinter.CTkButton(self.sidebar_frame, text="Test", command=self.test)
+        self.sidebar_button_3.grid(row=3, column=0, padx=20, pady=10)
+
+        self.appearance_mode_label = customtkinter.CTkLabel(self.sidebar_frame, text="Appearance Mode:", anchor="w")
+        self.appearance_mode_label.grid(row=5, column=0, padx=20, pady=(10, 0))
+
+        self.appearance_mode_optionemenu = customtkinter.CTkOptionMenu(self.sidebar_frame,
+                                                                       values=["Light", "Dark", "System"],
+                                                                       command=self.change_appearance_mode_event)
+        self.appearance_mode_optionemenu.grid(row=6, column=0, padx=20, pady=(10, 10))
+
+        self.scaling_label = customtkinter.CTkLabel(self.sidebar_frame, text="UI Scaling:", anchor="w")
+        self.scaling_label.grid(row=7, column=0, padx=20, pady=(10, 0))
+
+        self.scaling_optionemenu = customtkinter.CTkOptionMenu(self.sidebar_frame,
+                                                               values=["80%", "90%", "100%", "110%", "120%"],
+                                                               command=self.change_scaling_event)
+        self.scaling_optionemenu.grid(row=8, column=0, padx=20, pady=(10, 20))
+
+        self.update_main_frame()
+
+    def update_main_frame(self):
+        if App.n == 0:
+            self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
+            self.main_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
+            self.main_frame.grid_rowconfigure(4, weight=1)
+            self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Start",
+                                                     font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+            # Add button to move to start page from other pages
+            self.start_button = customtkinter.CTkButton(self.main_frame, text="Back to Start", command=self.start_page)
+            self.start_button.grid(row=1, column=0, padx=20, pady=10)
+        elif App.n == 1:
+            self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
+            self.main_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
+            self.main_frame.grid_rowconfigure(4, weight=1)
+            self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Train",
+                                                     font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+            # Add button to move to start page from other pages
+            self.start_button = customtkinter.CTkButton(self.main_frame, text="Back to Start", command=self.start_page)
+            self.start_button.grid(row=1, column=0, padx=20, pady=10)
+        elif App.n == 2:
+            self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
+            self.main_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
+            self.main_frame.grid_rowconfigure(4, weight=1)
+            self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Test",
+                                                     font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+            # Add button to move to start page from other pages
+            self.start_button = customtkinter.CTkButton(self.main_frame, text="Back to Start", command=self.start_page)
+            self.start_button.grid(row=1, column=0, padx=20, pady=10)
+        elif App.n == 3:
+            self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
+            self.main_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
+            self.main_frame.grid_rowconfigure(4, weight=1)
+            self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Collect",
+                                                     font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+            # Add button to move to start page from other pages
+            self.start_button = customtkinter.CTkButton(self.main_frame, text="Back to Start", command=self.start_page)
+            self.start_button.grid(row=1, column=0, padx=20, pady=10)
+
+    def start_page(self):
+        App.n = 0
+        self.update_main_frame()
+
+    def open_input_dialog_event(self):
+        dialog = customtkinter.CTkInputDialog(text="Type in a number:", title="CTkInputDialog")
+        print("CTkInputDialog:", dialog.get_input())
+
+    def change_appearance_mode_event(self, new_appearance_mode: str):
+        customtkinter.set_appearance_mode(new_appearance_mode)
+
+    def change_scaling_event(self, new_scaling: str):
+        new_scaling_float = int(new_scaling.replace("%", "")) / 100
+        customtkinter.set_widget_scaling(new_scaling_float)
+
+    def Traindata(self):
+        App.n = 1
+        self.update_main_frame()
+
+    def Collectdata(self):
+        App.n = 3
+        self.update_main_frame()
+
+    def test(self):
+        App.n = 2
+        self.update_main_frame()
+
+
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()

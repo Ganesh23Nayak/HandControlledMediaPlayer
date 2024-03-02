@@ -1,9 +1,10 @@
 import tkinter
+from tkinter import IntVar
 import customtkinter
 import dataCollection
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
-customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
+customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
 
 class App(customtkinter.CTk):
@@ -18,7 +19,7 @@ class App(customtkinter.CTk):
         self.grid_columnconfigure((2, 3), weight=0)
         self.grid_rowconfigure((0, 1, 2), weight=1)
 
-        self.sidebar_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
+        self.sidebar_frame = customtkinter.CTkFrame(self, width=160, corner_radius=0)
         self.sidebar_frame.grid(row=0, column=0, rowspan=4, sticky="nsew")
         self.sidebar_frame.grid_rowconfigure(4, weight=1)
 
@@ -59,7 +60,7 @@ class App(customtkinter.CTk):
     def update_main_frame(self):
         if App.n == 0:
             self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
-            self.main_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
+            self.main_frame.grid(row=0, column=1, rowspan=4, sticky="nsew" )
             self.main_frame.grid_rowconfigure(4, weight=1)
             self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Start",
                                                      font=customtkinter.CTkFont(size=20, weight="bold"))
@@ -71,10 +72,11 @@ class App(customtkinter.CTk):
             self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
             self.main_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
             self.main_frame.grid_rowconfigure(4, weight=1)
-            self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Train",
+            self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Data Collection",
                                                      font=customtkinter.CTkFont(size=20, weight="bold"))
-            self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
-            # Add button to move to start page from other pages
+            self.logo_label.grid(row=0, column=4, columnspan=10, padx=50, pady=(20, 10), sticky="w")
+
+            # Back to start button
             self.start_button = customtkinter.CTkButton(self.main_frame, text="Back to Start", command=self.start_page)
             self.start_button.grid(row=1, column=0, padx=20, pady=10)
 
@@ -82,7 +84,7 @@ class App(customtkinter.CTk):
             self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
             self.main_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
             self.main_frame.grid_rowconfigure(4, weight=1)
-            self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Test",
+            self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Train Data",
                                                      font=customtkinter.CTkFont(size=20, weight="bold"))
             self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
             # Add button to move to start page from other pages
@@ -139,15 +141,15 @@ class App(customtkinter.CTk):
         customtkinter.set_widget_scaling(new_scaling_float)
 
     def Traindata(self):
-        App.n = 1
+        App.n = 2
         self.update_main_frame()
     
     def Collectdata(self):
-        App.n = 3
+        App.n = 1
         self.update_main_frame()
 
     def test(self):
-        App.n = 2
+        App.n = 3
         self.update_main_frame()
 
     def save(self):

@@ -44,13 +44,15 @@ def inference():
         lst = np.array(lst).reshape(1, -1)
 
         pred = label[np.argmax(model.predict(lst))]
-        print(pred)
+        # print(pred)
 
+        cv2.putText(frm, pred, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         cv2.imshow("window", frm)
+
 
         if cv2.waitKey(1) == 27:
             cap.release()
             cv2.destroyAllWindows()
             break
 
-
+inference()

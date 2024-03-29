@@ -39,12 +39,13 @@ def train_data():
 
     # print(y)
     y=to_categorical(y)
-    # print(y)
+    print(y)
     x_new=x.copy()
     y_new=y.copy()
     counter=0
 
     cnt=np.arange(x.shape[0])
+    
     np.random.shuffle(cnt)
 
     for i in cnt:
@@ -57,6 +58,7 @@ def train_data():
     # print(y_new)
 
     ip=Input(shape=(x.shape[1]))
+    print(ip)
     m=Dense(512,activation="relu")(ip)
     m=Dense(512,activation="relu")(m)
 
@@ -70,3 +72,4 @@ def train_data():
     model.save("model.h5")
     np.save("labels.npy",np.array(label))
 
+train_data()

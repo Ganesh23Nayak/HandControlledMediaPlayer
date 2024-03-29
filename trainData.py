@@ -27,8 +27,8 @@ def train_data():
             dictionary[i.split('.')[0]]=c
             c=c+1
 
-    print(label)
-    print(dictionary)
+    # print(label)
+    # print(dictionary)
 
 
 
@@ -38,16 +38,18 @@ def train_data():
     y=np.array(y,dtype="int32")
 
     # print(y)
+
     y=to_categorical(y)
-    print(y)
+    # print(y)
+
     x_new=x.copy()
     y_new=y.copy()
     counter=0
 
     cnt=np.arange(x.shape[0])
-    
+    # print(cnt)
     np.random.shuffle(cnt)
-
+    # print(cnt)
     for i in cnt:
         x_new[counter]=x[i]
         y_new[counter]=y[i]

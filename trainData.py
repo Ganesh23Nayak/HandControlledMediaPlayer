@@ -74,4 +74,4 @@ def train_data():
     model.save("model.h5")
     np.save("labels.npy",np.array(label))
 
-train_data()
+    return 1

@@ -55,19 +55,22 @@ def inference():
             # print("Prediction:", pred)
 
             # Check if predicted value persists for more than 5 seconds
-            if pred == "Play" or pred == "Pause" or pred == "FastForward" or pred=="Backward":
+            if pred == "Play" or pred == "FastForward" or pred=="Backward" or pred == "VolumeUp" or pred == "VolumeDown":
                 if not action_flag:
                     action_time = time.time()
                     action_flag = True
                 elif time.time() - action_time >= 3:
                     if pred == "Play":
                         pyautogui.press("space")
-                    elif pred == "Pause":
-                        pyautogui.press("space")
+                    elif pred == "VolumeUp":
+                        pyautogui.press("up")
                     elif pred == "FastForward":
                         pyautogui.press("right")
                     elif pred == "Backward":
                         pyautogui.press("left")
+                    elif pred == "VolumeDown":
+                        pyautogui.press("down")
+                    
                     action_flag = False
 
             # Display prediction on the frame
@@ -82,4 +85,3 @@ def inference():
             cv2.destroyAllWindows()
             break
 
-inference()

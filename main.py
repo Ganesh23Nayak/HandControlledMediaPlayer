@@ -17,7 +17,7 @@ class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.title("Media Controller Using Hand Gestures")
-        self.geometry("1100x580")
+        self.geometry("1366x768")
         self.resizable(width=True, height=True)
 
         # set grid layout 1x2
@@ -56,7 +56,7 @@ class App(customtkinter.CTk):
                                                              compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.navigation_frame_label.grid(row=0, column=0, padx=20, pady=20)
 
-
+ 
         self.data_collection_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Collect Data",
                                                    fg_color="transparent", text_color=("gray10", "gray90"), hover_color=("gray70", "gray30"),
                                                    image=self.data_collection, anchor="w", command=self.Collectdata)
@@ -81,18 +81,56 @@ class App(customtkinter.CTk):
         if App.n == 0:
             
             self.label_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
-            self.label_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
-            self.label_frame.grid_rowconfigure(4, weight=1)     
-            self.main_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
-              
+            self.label_frame.grid(row=0, column=1, rowspan=6, sticky="nsew" ,columnspan=5)
+            self.label_frame.grid_rowconfigure(4, weight=1)
+
+            self.main_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")  
             self.main_frame.grid(row=0, column=1,rowspan=10)
             self.main_frame.grid_columnconfigure(0, weight=1)
             self.logo_label = customtkinter.CTkLabel(self.label_frame, text="Start",
                                                      font=customtkinter.CTkFont(size=20, weight="bold"))
             self.logo_label.grid(row=0, column=0, padx=20, pady=10,sticky="nsew")
+
+            self.main_frame1 = customtkinter.CTkFrame(self.main_frame, corner_radius=0, fg_color="transparent")  
+            self.main_frame1.grid(row=0, column=5,rowspan=10)
+            self.main_frame1.grid_columnconfigure(5, weight=1)
+
+            #help box##########################
+            self.help_box = customtkinter.CTkFrame(self.main_frame1, border_width=1, border_color="gray50", corner_radius=5)
+            self.help_box.grid(row=1, column=5, padx=20, sticky="nsew")
+
+            self.one_image_label = customtkinter.CTkLabel(self.help_box, text="", image=self.one_image_display)
+            self.one_image_label.grid(row=2, column=2, padx=20, pady=10)
+            self.one_label = customtkinter.CTkLabel(self.help_box, text="Play/Pause", font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.one_label.grid(row=3, column=2, padx=20, pady=10)
+
+            self.two_image_label = customtkinter.CTkLabel(self.help_box, text="", image=self.two_image_display)
+            self.two_image_label.grid(row=5, column=2, padx=20, pady=10)
+            self.two_label = customtkinter.CTkLabel(self.help_box, text="Volume Up", font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.two_label.grid(row=6, column=2, padx=20, pady=10)
+            
+            self.three_image_label = customtkinter.CTkLabel(self.help_box, text="", image=self.three_image_display)
+            self.three_image_label.grid(row=2, column=5, padx=20, pady=10)
+            self.three_label = customtkinter.CTkLabel(self.help_box, text="Fast Forward", font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.three_label.grid(row=3, column=5, padx=20, pady=10)
+
+            
+            self.four_image_label = customtkinter.CTkLabel(self.help_box, text="", image=self.four_image_display)
+            self.four_image_label.grid(row=5, column=5, padx=20, pady=10)
+            self.four_label = customtkinter.CTkLabel(self.help_box, text="Backward", font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.four_label.grid(row=6, column=5, padx=20, pady=10)
+
+            
+            self.five_image_label = customtkinter.CTkLabel(self.help_box, text="", image=self.five_image_display)
+            self.five_image_label.grid(row=11, column=2, padx=20, pady=10)
+            self.five_label = customtkinter.CTkLabel(self.help_box, text="Volume Down", font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.five_label.grid(row=12, column=2, padx=20, pady=10)
+            ###############################
+
+
             # Add button to move to start page from other pages
             self.start_button = customtkinter.CTkButton(self.main_frame, text="Start", command=self.start,width=200,height=90,font=customtkinter.CTkFont(size=30, weight="bold"),fg_color="green",text_color="white")
-            self.start_button.grid(row=1, column=0, padx=20, pady=10)
+            self.start_button.grid(row=1, column=1, padx=350, pady=250)
 
             
             
@@ -182,19 +220,37 @@ class App(customtkinter.CTk):
             self.save_button.grid(row=15, column=0, padx=10, pady=25)
 
         elif App.n == 2:
-            self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
-            self.main_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
-            self.main_frame.grid_rowconfigure(4, weight=1)
-            self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Train Data",
-                                                     font=customtkinter.CTkFont(size=20, weight="bold"))
-            self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
-            # Add button to move to start page from other pages
-            self.start_button = customtkinter.CTkButton(self.main_frame, text="Back to Start", command=self.start_page)
-            self.start_button.grid(row=1, column=0, padx=20, pady=10)
+            # self.main_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
+            # self.main_frame.grid(row=0, column=1, rowspan=10, sticky="nsew")
+            # self.main_frame.grid_rowconfigure(4, weight=1)
 
+            # self.logo_label = customtkinter.CTkLabel(self.main_frame, text="Train Data",
+            #                                          font=customtkinter.CTkFont(size=20, weight="bold"))
+            # self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+            # # Add button to move to start page from other pages
+            # self.start_button = customtkinter.CTkButton(self.main_frame, text="Back to Start", command=self.start_page)
+            # self.start_button.grid(row=1, column=0, padx=20, pady=10)
+
+            # self.logo_label.grid(row=0, column=0, padx=20, pady=10,sticky="nsew")
+            # self.train_button = customtkinter.CTkButton(self.main_frame, text="Train Data", command=self.train,width=200,height=90,font=customtkinter.CTkFont(size=30, weight="bold"),fg_color="green",text_color="white")
+            # self.train_button.grid(row=3, column=5, padx=20, pady=10)
+
+            self.label_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
+            self.label_frame.grid(row=0, column=1, rowspan=6, sticky="nsew")
+            self.label_frame.grid_rowconfigure(4, weight=1)     
+            self.main_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
+              
+            self.main_frame.grid(row=0, column=1,rowspan=10)
+            self.main_frame.grid_columnconfigure(0, weight=1)
+            self.logo_label = customtkinter.CTkLabel(self.label_frame, text="Train Data",
+                                                     font=customtkinter.CTkFont(size=20, weight="bold"))
             self.logo_label.grid(row=0, column=0, padx=20, pady=10,sticky="nsew")
-            self.train_button = customtkinter.CTkButton(self.main_frame, text="Train Data", command=self.train,width=200,height=90,font=customtkinter.CTkFont(size=30, weight="bold"),fg_color="green",text_color="white")
-            self.train_button.grid(row=5, column=2, padx=20, pady=10)
+
+            self.start_button = customtkinter.CTkButton(self.label_frame, text="Back to Start", command=self.start_page)
+            self.start_button.grid(row=1, column=0, padx=20, pady=10)
+            # Add button to move to start page from other pages
+            self.start_button = customtkinter.CTkButton(self.main_frame, text="Train Data", command=self.train,width=200,height=90,font=customtkinter.CTkFont(size=30, weight="bold"),fg_color="green",text_color="white")
+            self.start_button.grid(row=1, column=0, padx=20, pady=10)
             
 
        

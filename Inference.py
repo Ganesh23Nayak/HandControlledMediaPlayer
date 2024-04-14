@@ -90,5 +90,5 @@ def inference():
             cv2.destroyAllWindows()
             break
 
-
-inference()
+#
+# inference()

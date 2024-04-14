@@ -6,6 +6,7 @@ import os
 from PIL import Image
 from trainData import train_data
 from Inference import inference
+from InferenceDefault import inferenceDefault
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -79,7 +80,7 @@ class App(customtkinter.CTk):
 
     def update_main_frame(self):
         if App.n == 0:
-            
+
             self.label_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
             self.label_frame.grid(row=0, column=1, rowspan=6, sticky="nsew" ,columnspan=5)
             self.label_frame.grid_rowconfigure(4, weight=1)
@@ -90,6 +91,17 @@ class App(customtkinter.CTk):
             self.logo_label = customtkinter.CTkLabel(self.label_frame, text="Start",
                                                      font=customtkinter.CTkFont(size=20, weight="bold"))
             self.logo_label.grid(row=0, column=0, padx=20, pady=10,sticky="nsew")
+
+            self.radiobutton_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
+            self.radiobutton_frame.grid(row=1, column=1, rowspan=10, padx=20, pady=0,sticky="nsew")
+
+            self.radio_var = tkinter.StringVar(value="Default")
+
+            self.radio_button_1 = customtkinter.CTkRadioButton(self.radiobutton_frame, variable=self.radio_var, value="Default", text="Defualt", font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.radio_button_1.grid(row=2, column=0, pady=10, padx=20, sticky="nsew")
+
+            self.radio_button_3 = customtkinter.CTkRadioButton(master=self.radiobutton_frame, variable=self.radio_var, value="Custom", text="Custom", font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.radio_button_3.grid(row=2, column=4, pady=10, padx=20, sticky="nsew")
 
             self.main_frame1 = customtkinter.CTkFrame(self.main_frame, corner_radius=0, fg_color="transparent")  
             self.main_frame1.grid(row=0, column=5,rowspan=10)
@@ -267,7 +279,11 @@ class App(customtkinter.CTk):
         self.update_main_frame()
 
     def start(self):
-        inference()
+        if self.radio_var.get() == "Default":
+            inferenceDefault()
+        elif self.radio_var.get() == "Custom":
+            inference()
+
     
     def Collectdata(self):
         App.n = 1

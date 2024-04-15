@@ -68,6 +68,13 @@ class App(customtkinter.CTk):
                                                       image=self.training_image, anchor="w", command=self.Traindata)
         self.train_data_button.grid(row=2, column=0, sticky="ew")
 
+        self.radio_var = tkinter.StringVar(value="Default")
+
+        self.radio_button_1 = customtkinter.CTkRadioButton(self.navigation_frame, variable=self.radio_var, value="Default", text="Defualt", font=customtkinter.CTkFont(size=20, weight="bold"))
+        self.radio_button_1.grid(row=4, column=0, pady=10, padx=20, sticky="s")
+
+        self.radio_button_3 = customtkinter.CTkRadioButton(self.navigation_frame, variable=self.radio_var, value="Custom", text="Custom", font=customtkinter.CTkFont(size=20, weight="bold"))
+        self.radio_button_3.grid(row=5, column=0, pady=10, padx=20,sticky="s")
 
         self.appearance_mode_menu = customtkinter.CTkOptionMenu(self.navigation_frame, values=["Light", "Dark", "System"],
                                                                 command=self.change_appearance_mode_event)
@@ -92,16 +99,16 @@ class App(customtkinter.CTk):
                                                      font=customtkinter.CTkFont(size=20, weight="bold"))
             self.logo_label.grid(row=0, column=0, padx=20, pady=10,sticky="nsew")
 
-            self.radiobutton_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
-            self.radiobutton_frame.grid(row=1, column=1, rowspan=10, padx=20, pady=0,sticky="nsew")
+            # self.radiobutton_frame = customtkinter.CTkFrame(self, width=140, corner_radius=0)
+            # self.radiobutton_frame.grid(row=1, column=1, rowspan=10, padx=20, pady=0,sticky="nsew")
 
-            self.radio_var = tkinter.StringVar(value="Default")
+            # self.radio_var = tkinter.StringVar(value="Default")
 
-            self.radio_button_1 = customtkinter.CTkRadioButton(self.radiobutton_frame, variable=self.radio_var, value="Default", text="Defualt", font=customtkinter.CTkFont(size=20, weight="bold"))
-            self.radio_button_1.grid(row=2, column=0, pady=10, padx=20, sticky="nsew")
+            # self.radio_button_1 = customtkinter.CTkRadioButton(self.radiobutton_frame, variable=self.radio_var, value="Default", text="Defualt", font=customtkinter.CTkFont(size=20, weight="bold"))
+            # self.radio_button_1.grid(row=2, column=0, pady=10, padx=20, sticky="nsew")
 
-            self.radio_button_3 = customtkinter.CTkRadioButton(master=self.radiobutton_frame, variable=self.radio_var, value="Custom", text="Custom", font=customtkinter.CTkFont(size=20, weight="bold"))
-            self.radio_button_3.grid(row=2, column=4, pady=10, padx=20, sticky="nsew")
+            # self.radio_button_3 = customtkinter.CTkRadioButton(master=self.radiobutton_frame, variable=self.radio_var, value="Custom", text="Custom", font=customtkinter.CTkFont(size=20, weight="bold"))
+            # self.radio_button_3.grid(row=2, column=4, pady=10, padx=20, sticky="nsew")
 
             self.main_frame1 = customtkinter.CTkFrame(self.main_frame, corner_radius=0, fg_color="transparent")  
             self.main_frame1.grid(row=0, column=5,rowspan=10)

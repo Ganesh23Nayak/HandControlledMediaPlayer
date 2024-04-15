@@ -1,92 +1,102 @@
 import cv2
 import mediapipe as mp
-import numpy as np
-from keras.models import load_model
-import time
 import pyautogui
+import time
 
 def inferenceDefault():
-    # Load the trained model and labels
-    model = load_model('modelDefault.h5')
-    label = np.load('labels.npy')
 
-    # Initialize MediaPipe Holistic
-    holistic = mp.solutions.holistic
-    holis = holistic.Holistic()
 
-    # Initialize video capture
+    cnt = 0
+
+    def count_fingers(lst):
+        cnt = 0
+
+        thresh = (lst.landmark[0].y * 100 - lst.landmark[9].y * 100) / 2
+
+        if (lst.landmark[5].y * 100 - lst.landmark[8].y * 100) > thresh:
+            cnt += 1
+
+        if (lst.landmark[9].y * 100 - lst.landmark[12].y * 100) > thresh:
+            cnt += 1
+
+        if (lst.landmark[13].y * 100 - lst.landmark[16].y * 100) > thresh:
+            cnt += 1
+
+        if (lst.landmark[17].y * 100 - lst.landmark[20].y * 100) > thresh:
+            cnt += 1
+
+        if (lst.landmark[5].x * 100 - lst.landmark[4].x * 100) > 6:
+            cnt += 1
+
+        return cnt
+
     cap = cv2.VideoCapture(0)
 
-    # Initialize variables for tracking time and actions
+    d = {
+        0: "",
+        1: "Up",
+        2: "Down",
+        3: "Forward",
+        4: "Backward",
+        5: "PlayOrPause"
+    }
+
     action_time = 0
     action_flag = False
 
+    drawing = mp.solutions.drawing_utils
+    hands = mp.solutions.hands
+    hand_obj = hands.Hands(max_num_hands=1)
+
+    start_init = False
+
+    prev = -1
+
     while True:
         end_time = time.time()
-        lst = []
         _, frm = cap.read()
         frm = cv2.flip(frm, 1)
 
-        # Process the frame with MediaPipe Holistic
-        res = holis.process(cv2.cvtColor(frm, cv2.COLOR_BGR2RGB))
+        res = hand_obj.process(cv2.cvtColor(frm, cv2.COLOR_BGR2RGB))
 
-        # Check if at least one hand is detected
-        if res.left_hand_landmarks or res.right_hand_landmarks:
+        if res.multi_hand_landmarks:
 
-            # Extract hand landmarks and normalize
-            if res.left_hand_landmarks:
-                for i in res.left_hand_landmarks.landmark:
-                    lst.append(i.x - res.left_hand_landmarks.landmark[8].x)
-                    lst.append(i.y - res.left_hand_landmarks.landmark[8].y)
-            else:
-                lst.extend([0.0] * 42)
+            hand_keyPoints = res.multi_hand_landmarks[0]
 
-            if res.right_hand_landmarks:
-                for i in res.right_hand_landmarks.landmark:
-                    lst.append(i.x - res.right_hand_landmarks.landmark[8].x)
-                    lst.append(i.y - res.right_hand_landmarks.landmark[8].y)
-            else:
-                lst.extend([0.0] * 42)
+            cnt = count_fingers(hand_keyPoints)
 
-            lst = np.array(lst).reshape(1, -1)
-
-            # Make predictions using the model
-            pred = label[np.argmax(model.predict(lst))]
-            # print("Prediction:", pred)
-
-            # Check if predicted value persists for more than 5 seconds
-            if pred == "PlayOrPause" or pred == "FastForward" or pred=="Backward" or pred == "Up" or pred == "Down":
+            if cnt == 1 or cnt == 2 or cnt == 3 or cnt == 4 or cnt == 5:
                 if not action_flag:
                     action_time = time.time()
                     action_flag = True
                 elif time.time() - action_time >= 3:
-                    if pred == "PlayOrPause":
+                    if cnt == 5:
                         print("space")
                         pyautogui.press("space")
-                    elif pred == "Up":
+                    elif cnt == 1:
                         print("up")
                         pyautogui.press("up")
-                    elif pred == "FastForward":
+                    elif cnt == 3:
                         print("right")
                         pyautogui.press("right")
-                    elif pred == "Backward":
+                    elif cnt == 4:
                         print("backward")
                         pyautogui.press("left")
-                    elif pred == "Down":
+                    elif cnt == 2:
                         print("down")
                         pyautogui.press("down")
-                    
+
                     action_flag = False
 
-            # Display prediction on the frame
-            cv2.putText(frm,pred, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            drawing.draw_landmarks(frm, hand_keyPoints, hands.HAND_CONNECTIONS)
+        else:
+            cnt = 0
 
-        # Display the frame
+        cv2.putText(frm, d[cnt], (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         cv2.imshow("window", frm)
 
-        # Exit loop on pressing ESC
         if cv2.waitKey(1) == 27:
-            cap.release()
             cv2.destroyAllWindows()
+            cap.release()
             break
 
